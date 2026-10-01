@@ -1,5 +1,4 @@
 # include <stdio.h>
-# include <conio.h>
 # include <stdlib.h>
 
 int main(){
@@ -7,13 +6,16 @@ int main(){
     float profit_per_weight;
     int vehicle_capacity;
     int number_of_packages;
-    int id[100], w[100], p[100],p_w[100];
+    int id[100], w[100], p[100];
+    float p_w[100];
 
     printf("Enter the vehicle capacity: ");
     scanf("%d", &vehicle_capacity);
 
     printf("Enter the number of packages: ");
     scanf("%d", &number_of_packages);
+
+    printf("\n");
 
     for(int i = 0; i < number_of_packages; i++) {
 
@@ -37,7 +39,7 @@ int main(){
 
         printf("profit_per_weight : %.2f\n", profit_per_weight);
 
-        printf("------------------------------------------------------------\n");
+        printf("\n");
     } 
 
     for(int i = 0; i < number_of_packages; i++) {
@@ -62,20 +64,32 @@ int main(){
         }
     }
 
+    float max_profit = 0;
+
     for(int i = 0; i < number_of_packages; i++) {
         if(vehicle_capacity == 0) {
             break;
         }
 
         if(w[i] <= vehicle_capacity) {
+
             printf("Package ID: %d, Weight: %d, Profit: %d\n", id[i], w[i], p[i]);
             vehicle_capacity -= w[i];
+            max_profit += p[i];
+
         } else {
             float fraction = (float)vehicle_capacity / w[i];
-            printf("Package ID: %d, Weight: %.2f, Profit: %.2f\n", id[i], vehicle_capacity, p[i] * fraction);
+            float fractional_profit = p[i] * fraction;
+            printf("Package ID: %d, Weight: %.2f, Profit: %.2f\n", id[i], (double)vehicle_capacity, fractional_profit);
             vehicle_capacity = 0;
+            max_profit += fractional_profit;
         }
     }
+
+    printf("\n");
+
+    printf("Max Profit: %.2f\n", max_profit);
+
 
     return 0;   
 }
